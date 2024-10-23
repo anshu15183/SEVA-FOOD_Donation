@@ -35,7 +35,13 @@
 							<% for(let i = 0; i < pendingDonations.length; i++) { %>
 							<tr>
 								<th scope="row"><%= i + 1 %></th>
-								<td><%= pendingDonations[i].donor.firstName + " " + pendingDonations[i].donor.lastName %></td>
+								<td>
+<% if (pendingDonations[i].donor) { %>
+                <%= pendingDonations[i].donor.firstName + " " + pendingDonations[i].donor.lastName %>
+            <% } else { %>
+                <em>No Donor Information</em>
+            <% } %>
+</td>
 								<td><%= pendingDonations[i].foodType %></td>
 								<td><%= pendingDonations[i].quantity %></td>
 								<td class="fw-bold text-<%= pendingDonations[i].status.toLowerCase() %>"><%= pendingDonations[i].status %></td>

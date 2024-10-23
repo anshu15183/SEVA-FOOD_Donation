@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the global CSS file -->
+</head>
+<body>
+    <main>
+        <!-- Sidebar inclusion -->
+        <%- include('../partials/agentSidebar') %>
+
+        <!-- Main content section -->
+        <div id="main-wrapper">
+            <!-- Header section -->
+            <div class="bg-white shadow-sm p-3 d-flex justify-content-between align-items-center">
+                <span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+                <h5 class="m-0 color-theme">Profile</h5>
+            </div>
+
+            <!-- Profile Form -->
+            <form action="/agent/profile?_method=PUT" method="POST" class="profile-form w-75 border ms-3 my-3 p-4 bg-white rounded-2 shadow" style="min-width: 400px;">
+                <div class="row">
+                    <!-- First Name Input -->
+                    <div class="col-sm-6 mb-4">
+                        <label for="first-name" class="form-label">First Name</label>
+                        <input type="text" name="agent[firstName]" class="form-control" id="first-name" placeholder="Enter first name.." value="<%= currentUser.firstName %>" required>
+                    </div>
+
+                    <!-- Last Name Input -->
+                    <div class="col-sm-6 mb-4">
+                        <label for="last-name" class="form-label">Last Name</label>
+                        <input type="text" name="agent[lastName]" class="form-control" id="last-name" placeholder="Enter last name.." value="<%= currentUser.lastName %>" required>
+                    </div>
+                </div>
+
+                <!-- Email Input -->
+                <div class="mb-4">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" value="<%= currentUser.email %>" disabled>
+                </div>
+
+                <!-- Gender Radio Buttons -->
+                <div class="mb-4">
+                    <span class="d-inline-block me-2">Gender:</span>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="agent[gender]" id="male" value="male" <% if(currentUser.gender=='male'){%> checked <%}%> >
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="agent[gender]" id="female" value="female" <% if(currentUser.gender=='female'){%> checked <%}%> >
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                </div>
+
+                <!-- Address Input -->
+                <div class="mb-4">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" name="agent[address]" class="form-control" id="address" placeholder="Enter address.." value="<%= currentUser.address %>">
+                </div>
+
+                <!-- Phone Input -->
+                <div class="mb-4">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="number" name="agent[phone]" class="form-control" id="phone" placeholder="Enter phone.." value="<%= currentUser.phone %>">
+                </div>
+
+                <!-- Update Button -->
+                <button type="submit" class="btn btn-primary w-75 d-block m-auto mt-4">Update</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"> <!-- Link to the global JavaScript file -->
+    </script>
+</body>
+</html>
+<style>
+	/* styles.css */
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Sidebar Styles */
+.agent-sidebar {
+    width: 250px; /* Fixed width for sidebar */
+    height: 100vh; /* Full height */
+    position: fixed; /* Fixed positioning */
+    left: 0; /* Align to the left */
+    top: 0; /* Align to the top */
+    background-color: #f8f9fa; /* Sidebar background color */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    z-index: 1000; /* Ensure it’s above other content */
+}
+
+/* Main Content Styles */
+#main-wrapper {
+    margin-left: 250px; /* Adjust margin to avoid overlap */
+    padding: 20px; /* Padding for content */
+    transition: margin-left 0.3s ease; /* Smooth transition when toggling */
+}
+
+/* Header Styling */
+.bg-white {
+    background-color: white !important;
+}
+
+.color-theme {
+    color: #343a40; /* Theme color */
+}
+
+/* Form Styling */
+.profile-form {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Inputs */
+.form-label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Sidebar Toggle Button Styling */
+#sidebar-toggler-btn {
+    cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .agent-sidebar {
+        width: 100%; /* Full width on small screens */
+        height: auto; /* Auto height */
+        position: relative; /* Change position for responsiveness */
+    }
+    
+    #main-wrapper {
+        margin-left: 0; /* No margin for small screens */
+    }
+}
+
+</style>
+
+<script></script>

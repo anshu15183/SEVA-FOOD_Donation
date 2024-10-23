@@ -1,0 +1,218 @@
+<main>
+	<%- include('../partials/agentSidebar') %>
+
+	<div id="main-wrapper">
+		<!-- Header for Pending Collections -->
+		<div class="bg-white shadow-sm p-3 d-flex align-items-center">
+			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+			<h5 class="m-0 color-theme d-inline-block">Pending Collections</h5>
+		</div>
+
+		<!-- Pending Collections Table -->
+		<div class="col col-sm-10 col-12 m-auto my-4 table-container">
+			<table class="table table-info table-striped table-hover m-0 bg-white">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Donor Name</th>
+						<th scope="col">Address to Collect</th>
+						<th scope="col">Phone</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for(let i = 0; i < pendingCollections.length; i++) { %>
+					<tr>
+						<th scope="row"><%= i + 1 %></th>
+						<td><%= pendingCollections[i].donor.firstName + " " + pendingCollections[i].donor.lastName %></td>
+						<td><%= pendingCollections[i].address %></td>
+						<td><%= pendingCollections[i].phone %></td>
+						<td>
+							<a href="/agent/collection/view/<%= pendingCollections[i]._id %>" class="btn btn-view">View</a>
+							<a href="/agent/collection/collect/<%= pendingCollections[i]._id %>" class="btn btn-collect">Collect</a>
+						</td>
+					</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</main>
+
+<style>
+	/* Container for the table */
+	.table-container {
+		max-height: 75vh;
+		overflow-y: auto;
+	}
+
+	/* Table Styling */
+	.table {
+		width: 100%;
+		margin: 0;
+		border-collapse: collapse;
+		table-layout: auto;
+	}
+
+	/* Table Header */
+	.table th {
+		background-color: #007bff; /* Primary color */
+		color: white;
+		padding: 12px;
+		text-align: left;
+		font-weight: bold;
+		border-bottom: 2px solid #dee2e6;
+	}
+
+	/* Table Rows */
+	.table td {
+		padding: 12px;
+		border-bottom: 1px solid #dee2e6;
+	}
+
+	/* Row Hover Effect */
+	.table tbody tr:hover {
+		background-color: #f8f9fa;
+		cursor: pointer;
+	}
+
+	/* Alternate Row Background */
+	.table tbody tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+
+	/* Button Styling */
+	.btn {
+		padding: 8px 12px;
+		font-size: 14px;
+		border: none;
+		color: white;
+		border-radius: 5px;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+		text-decoration: none;
+	}
+
+	.btn-view {
+		background-color: #28a745; /* Green for view */
+	}
+
+	.btn-view:hover {
+		background-color: #218838; /* Darker green on hover */
+	}
+
+	.btn-collect {
+		background-color: #ffc107; /* Yellow for collect */
+	}
+
+	.btn-collect:hover {
+		background-color: #e0a800; /* Darker yellow on hover */
+	}
+
+	/* Responsive Table for Small Screens */
+	@media (max-width: 768px) {
+		.table thead {
+			display: none;
+		}
+
+		.table,
+		.table tbody,
+		.table tr,
+		.table td {
+			display: block;
+			width: 100%;
+		}
+
+		.table tr {
+			margin-bottom: 15px;
+		}
+
+		.table td {
+			text-align: right;
+			padding-left: 50%;
+			position: relative;
+		}
+
+		.table td::before {
+			content: attr(data-label);
+			position: absolute;
+			left: 10px;
+			width: 45%;
+			text-align: left;
+			font-weight: bold;
+		}
+
+		.btn {
+			width: 100%;
+			margin-bottom: 10px;
+		}
+	}
+
+	/* General Layout Fix */
+	#sidebar {
+		position: fixed; /* Sidebar remains fixed on the left */
+		top: 0;
+		left: 0;
+		width: 250px; /* Fixed width for the sidebar */
+		height: 100%; /* Full height of the screen */
+		background-color: #343a40; /* Sidebar background color */
+		padding: 20px;
+		z-index: 1000; /* Ensures sidebar stays above the main content */
+		transition: all 0.3s ease;
+	}
+
+	#sidebar ul {
+		list-style-type: none;
+		padding: 0;
+	}
+
+	#sidebar ul li {
+		margin: 15px 0;
+		color: white;
+	}
+
+	#sidebar ul li a {
+		color: white;
+		text-decoration: none;
+	}
+
+	#sidebar ul li a:hover {
+		color: #ffeb3b; /* Add hover effect for links */
+	}
+
+	/* Main Content Wrapper */
+	#main-wrapper {
+		margin-left: 250px; /* Pushes the main content to the right, accommodating the sidebar */
+		padding: 20px;
+		transition: margin-left 0.3s ease; /* Smooth transition when sidebar toggles */
+	}
+
+	/* Sidebar Toggler Button */
+	#sidebar-toggler-btn {
+		cursor: pointer;
+	}
+
+	@media (max-width: 768px) {
+		/* Collapsible Sidebar for Mobile */
+		#sidebar {
+			left: -250px; /* Hide sidebar on mobile by default */
+		}
+
+		#sidebar.active {
+			left: 0; /* Show sidebar when toggled */
+		}
+
+		#main-wrapper {
+			margin-left: 0; /* Remove margin on mobile to use full width */
+		}
+
+		/* Toggle button style for small screens */
+		#sidebar-toggler-btn {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			font-size: 24px;
+			color: #343a40;
+		}
+	}
+</style>

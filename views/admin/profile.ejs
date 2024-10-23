@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Admin Profile</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="styles.css" />
+		<!-- Link to the global CSS file -->
+	</head>
+	<body>
+		<main>
+			<!-- Sidebar inclusion -->
+			<%- include('../partials/adminSidebar') %>
+
+			<!-- Main content section -->
+			<div id="main-wrapper">
+				<!-- Header section -->
+				<div class="bg-white shadow-sm p-3 d-flex justify-content-between align-items-center">
+					<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+					<h5 class="m-0 color-theme">Profile</h5>
+				</div>
+
+				<!-- Profile Form -->
+				<form
+					action="/admin/profile?_method=PUT"
+					method="POST"
+					class="profile-form w-75 border ms-3 my-3 p-4 bg-white rounded-2 shadow"
+					style="min-width: 400px">
+					<div class="row">
+						<!-- First Name Input -->
+						<div class="col-sm-6 mb-4">
+							<label for="first-name" class="form-label">First Name</label>
+							<input
+								type="text"
+								name="admin[firstName]"
+								class="form-control"
+								id="first-name"
+								placeholder="Enter first name.."
+								value="<%= currentUser.firstName %>"
+								required />
+						</div>
+
+						<!-- Last Name Input -->
+						<div class="col-sm-6 mb-4">
+							<label for="last-name" class="form-label">Last Name</label>
+							<input
+								type="text"
+								name="admin[lastName]"
+								class="form-control"
+								id="last-name"
+								placeholder="Enter last name.."
+								value="<%= currentUser.lastName %>"
+								required />
+						</div>
+					</div>
+
+					<!-- Email Input -->
+					<div class="mb-4">
+						<label for="email" class="form-label">Email</label>
+						<input type="email" id="email" class="form-control" value="<%= currentUser.email %>" disabled />
+					</div>
+
+					<!-- Gender Radio Buttons -->
+					<div class="mb-4">
+						<span class="d-inline-block me-2">Gender:</span>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="admin[gender]" id="male" value="male" <%
+							if(currentUser.gender=='male'){%> checked <%}%> >
+							<label class="form-check-label" for="male">Male</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="admin[gender]" id="female" value="female" <%
+							if(currentUser.gender=='female'){%> checked <%}%> >
+							<label class="form-check-label" for="female">Female</label>
+						</div>
+					</div>
+
+					<!-- Address Input -->
+					<div class="mb-4">
+						<label for="address" class="form-label">Address</label>
+						<input
+							type="text"
+							name="admin[address]"
+							class="form-control"
+							id="address"
+							placeholder="Enter address.."
+							value="<%= currentUser.address %>" />
+					</div>
+
+					<!-- Phone Input -->
+					<div class="mb-4">
+						<label for="phone" class="form-label">Phone</label>
+						<input
+							type="number"
+							name="admin[phone]"
+							class="form-control"
+							id="phone"
+							placeholder="Enter phone.."
+							value="<%= currentUser.phone %>" />
+					</div>
+
+					<!-- Update Button -->
+					<button type="submit" class="btn btn-primary w-75 d-block m-auto mt-4">Update</button>
+				</form>
+			</div>
+		</main>
+
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script src="script.js">
+			<!-- Link to the global JavaScript file -->
+		</script>
+	</body>
+</html>
+
+<style>
+	/* General Styles */
+	body {
+		font-family: Arial, sans-serif;
+		margin: 0;
+		padding: 0;
+		background-color: #f9f9f9;
+	}
+
+	/* Sidebar Styles */
+	.admin-sidebar {
+		width: 250px;
+		height: 100vh;
+		position: fixed;
+		left: 0;
+		top: 0;
+		background-color: #343a40;
+		color: white;
+		z-index: 1000;
+	}
+
+	/* Main Content Styles */
+	#main-wrapper {
+		margin-left: 250px;
+		padding: 20px;
+		transition: margin-left 0.3s ease;
+	}
+
+	/* Header Styling */
+	.bg-white {
+		background-color: #fff !important;
+		border-bottom: 1px solid #dee2e6;
+	}
+
+	.color-theme {
+		color: #007bff;
+	}
+
+	/* Form Styles */
+	.profile-form {
+		background-color: #ffffff;
+		border: 1px solid #ced4da;
+		border-radius: 5px;
+		padding: 20px;
+		box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.form-label {
+		font-weight: 500;
+		color: #495057;
+	}
+
+	.form-control {
+		border: 1px solid #ced4da;
+		padding: 10px;
+		font-size: 16px;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		border-color: #007bff;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #0056b3;
+	}
+
+	/* Sidebar Toggle Button */
+	#sidebar-toggler-btn {
+		cursor: pointer;
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.admin-sidebar {
+			width: 100%;
+			height: auto;
+			position: relative;
+		}
+		#main-wrapper {
+			margin-left: 0;
+		}
+	}
+</style>
+
+<script>
+	// script.js
+
+	const sidebarToggleBtn = document.getElementById("sidebar-toggler-btn");
+	const mainWrapper = document.getElementById("main-wrapper");
+
+	sidebarToggleBtn.addEventListener("click", () => {
+		if (mainWrapper.style.marginLeft === "0px" || mainWrapper.style.marginLeft === "") {
+			mainWrapper.style.marginLeft = "250px"; // Sidebar open
+		} else {
+			mainWrapper.style.marginLeft = "0px"; // Sidebar closed
+		}
+	});
+</script>

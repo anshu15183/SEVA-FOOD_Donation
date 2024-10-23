@@ -1,0 +1,133 @@
+<main>
+	<%- include('../partials/donorSidebar') %>
+
+	<div id="main-wrapper">
+		<!-- Header for the Profile section -->
+		<div class="bg-white shadow-sm p-3">
+			<span class="me-3" id="sidebar-toggler-btn">
+				<i class="fas fa-bars"></i>
+			</span>
+			<h5 class="m-0 color-theme d-inline-block">Profile</h5>
+		</div>
+
+		<!-- Profile form -->
+		<form action="/donor/profile?_method=PUT" method="POST" class="w-75 border ms-3 my-3 p-4 bg-white rounded-2 shadow" style="min-width: 400px">
+			<div class="row">
+				<div class="col-sm-6 mb-4">
+					<label for="first-name" class="form-label">First Name</label>
+					<input
+						type="text"
+						name="donor[firstName]"
+						class="form-control"
+						id="first-name"
+						placeholder="Enter first name.."
+						value="<%= currentUser.firstName %>"
+						required />
+				</div>
+
+				<div class="col-sm-6 mb-4">
+					<label for="last-name" class="form-label">Last Name</label>
+					<input
+						type="text"
+						name="donor[lastName]"
+						class="form-control"
+						id="last-name"
+						placeholder="Enter last name.."
+						value="<%= currentUser.lastName %>"
+						required />
+				</div>
+			</div>
+
+			<div class="mb-4">
+				<label for="email" class="form-label">Email</label>
+				<input type="email" id="email" class="form-control" value="<%= currentUser.email %>" disabled />
+			</div>
+
+			<div class="mb-4">
+				<span class="d-inline-block me-2">Gender:</span>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="donor[gender]" id="male" value="male" <% if(currentUser.gender=='male'){%>
+					checked <%}%> >
+					<label class="form-check-label" for="male">Male</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="donor[gender]" id="female" value="female" <%
+					if(currentUser.gender=='female'){%> checked <%}%> >
+					<label class="form-check-label" for="female">Female</label>
+				</div>
+			</div>
+
+			<div class="mb-4">
+				<label for="address" class="form-label">Address</label>
+				<input
+					type="text"
+					name="donor[address]"
+					class="form-control"
+					id="address"
+					placeholder="Enter address.."
+					value="<%= currentUser.address %>" />
+			</div>
+
+			<div class="mb-4">
+				<label for="phone" class="form-label">Phone</label>
+				<input
+					type="tel"
+					name="donor[phone]"
+					class="form-control"
+					id="phone"
+					placeholder="Enter phone.."
+					value="<%= currentUser.phone %>"
+					pattern="[0-9]{10}" />
+			</div>
+
+			<button type="submit" class="btn w-75 d-block m-auto mt-4">Update</button>
+		</form>
+	</div>
+</main>
+
+<!-- Add the following CSS styles to your stylesheet -->
+<style>
+	/* Overall styling for the body */
+	body {
+		margin: 0; /* Remove default margin */
+		font-family: Arial, sans-serif; /* Set default font */
+		background-color: #f0f0f0; /* Light grey background for contrast */
+	}
+
+	/* Main wrapper styling */
+	#main-wrapper {
+		margin-left: 220px; /* Space for the sidebar */
+		padding: 20px; /* Padding for main content */
+		background-color: #f0f0f0; /* Background color for the main wrapper */
+		min-height: 100vh; /* Minimum height of main content */
+	}
+
+	/* Form styling */
+	form {
+		background-color: #ffffff; /* White background for the form */
+		border-radius: 0.5rem; /* Rounded corners */
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+	}
+
+	/* Label styling */
+	.form-label {
+		font-weight: bold; /* Bold labels for clarity */
+	}
+
+	/* Button styling */
+	.btn {
+		background-color: #ff6b6b; /* Primary button color */
+		color: #ffffff; /* White text for button */
+	}
+
+	/* Button hover effect */
+	.btn:hover {
+		background-color: #e63946; /* Darker shade on hover */
+	}
+
+	/* Adjustments for input fields */
+	.form-control {
+		border: 1px solid #ced4da; /* Border color for inputs */
+		border-radius: 0.25rem; /* Rounded corners for inputs */
+	}
+</style>

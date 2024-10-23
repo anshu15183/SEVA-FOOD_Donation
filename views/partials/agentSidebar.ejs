@@ -1,0 +1,110 @@
+<div id="sidebar">
+	<div id="sidebar-content">
+		<ul id="sidebar-nav">
+			<li class="sidebar-welcome">Welcome <%= currentUser.firstName %></li>
+			<li><a href="/agent/dashboard">Dashboard</a></li>
+			<li><a href="/agent/collections/pending">My Pending Collections</a></li>
+			<li><a href="/agent/collections/previous">My Previous Collections</a></li>
+			<li><a href="/agent/profile">My Profile</a></li>
+			<li><a href="/auth/logout" class="btn logout-btn">Logout</a></li>
+		</ul>
+	</div>
+</div>
+
+<style>
+	/* Sidebar Container */
+	#sidebar {
+		width: 250px;
+		height: 100vh;
+		background-color: #343a40; /* Dark sidebar background */
+		position: fixed;
+		left: 0;
+		top: 0;
+		overflow-y: auto;
+		z-index: 1000;
+		transition: all 0.3s ease;
+	}
+
+	/* Sidebar Content Styling */
+	#sidebar-content {
+		padding-top: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	/* Sidebar Navigation List */
+	#sidebar-nav {
+		list-style-type: none;
+		padding: 0;
+		width: 100%;
+	}
+
+	/* Sidebar List Items */
+	#sidebar-nav li {
+		width: 100%;
+		padding: 15px 20px;
+		color: #ffffff;
+		font-size: 16px;
+		text-align: left;
+		transition: background 0.3s ease;
+	}
+
+	/* Welcome Text Styling */
+	.sidebar-welcome {
+		font-weight: bold;
+		font-size: 18px;
+		padding-bottom: 15px;
+	}
+
+	/* Links in Sidebar */
+	#sidebar-nav a {
+		color: #ffffff;
+		text-decoration: none;
+		display: block;
+		width: 100%;
+	}
+
+	/* Hover Effects */
+	#sidebar-nav li:hover {
+		background-color: #495057; /* Lighter shade on hover */
+	}
+
+	#sidebar-nav a:hover {
+		text-decoration: none;
+		color: #f8f9fa; /* Slightly lighter text on hover */
+	}
+
+	/* Logout Button Styling */
+	.logout-btn {
+		background-color: #dc3545; /* Bootstrap's danger color */
+		border: none;
+		color: white;
+		text-align: center;
+		width: 90%;
+		margin: 10px auto;
+		padding: 10px;
+		border-radius: 5px;
+		display: block;
+		font-size: 16px;
+		transition: background-color 0.3s ease;
+	}
+
+	.logout-btn:hover {
+		background-color: #c82333; /* Darker danger shade */
+	}
+
+	/* Responsive Sidebar */
+	@media (max-width: 768px) {
+		#sidebar {
+			width: 100%;
+			height: auto;
+			position: relative;
+		}
+
+		#sidebar-nav li {
+			padding: 12px 15px;
+			text-align: center;
+		}
+	}
+</style>

@@ -1,0 +1,110 @@
+<main>
+	<%- include('../partials/donorSidebar') %>
+
+	<div id="main-wrapper">
+		<!-- Header for Previous Donations section -->
+		<div class="bg-white shadow-sm p-3 header-section">
+			<span class="me-3" id="sidebar-toggler-btn">
+				<i class="fas fa-bars"></i>
+			</span>
+			<h5 class="m-0 color-theme d-inline-block">Previous Donations</h5>
+		</div>
+
+		<div class="col col-sm-10 col-12 m-auto my-4 donation-table-wrapper" style="max-height: 75%; overflow: auto">
+			<table class="table table-info table-striped table-hover m-0 bg-white">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Food Type</th>
+						<th scope="col">Quantity</th>
+						<th scope="col">Status</th>
+						<th scope="col">Cooking Time</th>
+						<th scope="col">Agent Assigned</th>
+						<th scope="col">Collection Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for(let i = 0; i < previousDonations.length; i++) { %>
+					<tr>
+						<th scope="row"><%= i + 1 %></th>
+						<td><%= previousDonations[i].foodType %></td>
+						<td><%= previousDonations[i].quantity %></td>
+						<td class="fw-bold text-<%= previousDonations[i].status %>"><%= previousDonations[i].status %></td>
+						<td><%= previousDonations[i].cookingTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) %></td>
+						<td><%= previousDonations[i].agent.firstName + " " + previousDonations[i].agent.lastName %></td>
+						<td><%= previousDonations[i].collectionTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) %></td>
+					</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</main>
+
+<!-- Add the following CSS styles to your stylesheet -->
+<style>
+	/* Overall styling for the body */
+	body {
+		margin: 0; /* Remove default margin */
+		font-family: Arial, sans-serif; /* Set default font */
+		background-color: #f0f0f0; /* Light grey background for contrast */
+	}
+
+	/* Main wrapper styling */
+	#main-wrapper {
+		margin-left: 220px; /* Space for the sidebar */
+		padding: 20px; /* Padding for main content */
+		background-color: #f0f0f0; /* Background color for the main wrapper */
+		min-height: 100vh; /* Minimum height of main content */
+	}
+
+	/* Donation table wrapper */
+	.donation-table-wrapper {
+		max-height: 75%; /* Maximum height for the table wrapper */
+		overflow: auto; /* Scroll if content exceeds max height */
+	}
+
+	/* Header section styling */
+	.header-section {
+		background-color: #f8f9fa; /* Light background for header */
+		border-radius: 0.5rem; /* Rounded corners */
+	}
+
+	/* Table styling */
+	.table {
+		width: 100%; /* Full width */
+		margin-bottom: 1rem; /* Space below the table */
+		color: #212529; /* Text color */
+	}
+
+	/* Striping and hover effects for table rows */
+	.table-striped tbody tr:nth-of-type(odd) {
+		background-color: #f9f9f9; /* Light grey for odd rows */
+	}
+
+	.table-hover tbody tr:hover {
+		background-color: #f1f1f1; /* Darker grey on hover */
+	}
+
+	/* Font weight styling for status */
+	.fw-bold {
+		font-weight: 700; /* Bold weight for status */
+	}
+
+	/* Status text color mapping */
+	.text-pending {
+		color: #ffc107; /* Yellow for pending */
+	}
+
+	.text-rejected {
+		color: #dc3545; /* Red for rejected */
+	}
+
+	.text-accepted {
+		color: #28a745; /* Green for accepted */
+	}
+
+	.text-assigned {
+		color: #007bff; /* Blue for assigned */
+	}
+</style>

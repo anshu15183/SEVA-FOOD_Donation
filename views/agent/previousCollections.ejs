@@ -1,0 +1,125 @@
+<main>
+	<%- include('../partials/agentSidebar') %>
+	
+	<div id="main-wrapper">
+		
+		<div class="bg-white shadow-sm p-3">
+			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+			<h5 class="m-0 color-theme d-inline-block">Previous Collections</h5>
+		</div>
+		
+		<div class="col col-sm-10 col-12 m-auto my-4" style="max-height: 75%; overflow: auto;">
+			<table class="table table-info table-striped table-hover m-0 bg-white">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Donor name</th>
+						<th scope="col">Address collected</th>
+						<th scope="col">Phone</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for(let i=0; i<previousCollections.length; i++) { %>
+						<tr>
+							<th scope="row"> <%= i+1 %> </th>
+							<td> <%= previousCollections[i].donor.firstName + " " + previousCollections[i].donor.lastName %> </td>
+							<td> <%= previousCollections[i].address %> </td>
+							<td> <%= previousCollections[i].phone %> </td>
+							<td><a href="/agent/collection/view/<%= previousCollections[i]._id %>" class="btn">View</a></td>
+						</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+</main>
+
+
+
+<style>
+	/* Main Wrapper Styling */
+#main-wrapper {
+    margin-left: 250px; /* Adjust for sidebar width */
+    padding: 20px;
+    transition: margin-left 0.3s ease; /* Smooth transition for mobile view */
+    background-color: #f4f6f9; /* Light background for contrast */
+    min-height: 100vh; /* Ensure content takes full page height */
+}
+
+/* Table Styling */
+.table {
+    border-radius: 8px; /* Slight rounding for cleaner look */
+    overflow: hidden;
+}
+
+.table th,
+.table td {
+    vertical-align: middle; /* Center text vertically */
+    text-align: center; /* Center text horizontally */
+    padding: 15px 10px;
+}
+
+.table-info thead {
+    background-color: #0d6efd; /* Theme primary color for header */
+    color: white; /* White text for better contrast */
+}
+
+.table-info tbody tr:nth-child(even) {
+    background-color: #e9f4ff; /* Alternating row color */
+}
+
+.table-info tbody tr:hover {
+    background-color: #d2e9ff; /* Hover effect */
+}
+
+/* Button Styling */
+.btn {
+    background-color: #0d6efd; /* Primary button color */
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    color: white;
+    text-decoration: none;
+}
+
+/* Media Query for Mobile */
+@media (max-width: 768px) {
+    #main-wrapper {
+        margin-left: 0; /* Full-width for mobile screens */
+        padding: 15px;
+    }
+
+    .table {
+        font-size: 14px; /* Smaller font for compact viewing */
+    }
+
+    .btn {
+        padding: 6px 15px;
+        font-size: 14px; /* Smaller buttons for mobile */
+    }
+
+    #sidebar {
+        left: -250px; /* Initially hide sidebar */
+    }
+
+    #sidebar-toggler-btn {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        font-size: 24px;
+    }
+
+    #sidebar.active {
+        left: 0;
+    }
+}
+
+</style>

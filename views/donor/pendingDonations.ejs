@@ -1,0 +1,192 @@
+<!-- Main HTML Structure -->
+<main>
+	<%- include('../partials/donorSidebar') %>
+
+	<div id="main-wrapper">
+		<!-- Header for the Pending Donations section -->
+		<div class="bg-white shadow-sm p-3 header-section">
+			<span class="me-3" id="sidebar-toggler-btn">
+				<i class="fas fa-bars"></i>
+			</span>
+			<h5 class="m-0 color-theme d-inline-block">Pending Donations</h5>
+		</div>
+
+		<div class="m-4 donation-list">
+			<% for(let i = 0; i < pendingDonations.length; i++) { %>
+			<div class="bg-white mb-4 p-4 shadow-sm donation-card">
+				<div class="donation-info mb-2">
+					<span class="info-label">Food type:</span>
+					<span><%= pendingDonations[i].foodType %></span>
+				</div>
+
+				<div class="donation-info mb-2">
+					<span class="info-label">Quantity:</span>
+					<span><%= pendingDonations[i].quantity %></span>
+				</div>
+
+				<div class="donation-info mb-2">
+					<span class="info-label">Address given:</span>
+					<span><%= pendingDonations[i].address %></span>
+				</div>
+
+				<div class="donation-info mb-2">
+					<span class="info-label">Phone given:</span>
+					<span><%= pendingDonations[i].phone %></span>
+				</div>
+
+				<div class="donation-info mb-2">
+					<span class="info-label">Time of cooking:</span>
+					<span><%= pendingDonations[i].cookingTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) %></span>
+				</div>
+
+				<div class="donation-info mb-2">
+					<span class="info-label">Status:</span>
+
+					<% if (pendingDonations[i].status == "pending") { %>
+					<span class="status-text text-pending">Your donation request hasn't been processed yet.</span>
+					<% } else if (pendingDonations[i].status == "rejected") { %>
+					<span class="status-text text-rejected">Your donation request has been rejected.</span>
+					<% } else if (pendingDonations[i].status == "accepted") { %>
+					<span class="status-text text-accepted"
+						>Your donation request has been accepted. Please wait while an agent is being assigned.</span
+					>
+					<% } else if (pendingDonations[i].status == "assigned") { %>
+					<span class="status-text text-assigned"
+						>Your donation request has been accepted, and the agent: <%= pendingDonations[i].agent.firstName + " " +
+						pendingDonations[i].agent.lastName %> has been assigned for collecting food from your house.</span
+					>
+					<% } %>
+				</div>
+
+				<% if (pendingDonations[i].status == "rejected") { %>
+				<div class="mb-2">
+					<a class="btn btn-retry" href="/donor/donation/deleteRejected/<%= pendingDonations[i]._id %>">Okay</a>
+				</div>
+				<% } %>
+			</div>
+			<% } %>
+		</div>
+	</div>
+</main>
+
+<!-- Add the following CSS styles to your stylesheet -->
+<style>
+	/* Overall styling for the body to remove margin */
+	body {
+		margin: 0; /* Remove default margin */
+		font-family: Arial, sans-serif; /* Set default font */
+		background-color: #f0f0f0; /* Light grey background for contrast */
+	}
+
+	/* Main wrapper for layout */
+	#main-wrapper {
+		margin-left: 220px; /* Space for the sidebar */
+		padding: 20px; /* Padding for main content */
+		background-color: #f0f0f0; /* Background color for the main wrapper */
+		min-height: 100vh; /* Minimum height of main content */
+	}
+
+	/* Sidebar styling */
+	#sidebar {
+		position: fixed; /* Fixed position for sidebar */
+		top: 0; /* Align to top */
+		left: 0; /* Align to left */
+		width: 200px; /* Width of sidebar */
+		height: 100%; /* Full height */
+		background-color: #343a40; /* Dark background for sidebar */
+		color: white; /* White text for contrast */
+		padding: 20px; /* Padding for sidebar */
+		box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+	}
+
+	/* Sidebar navigation styling */
+	#sidebar-nav {
+		list-style: none; /* Remove default list styling */
+		padding: 0; /* Remove padding */
+		margin: 0; /* Remove margin */
+	}
+
+	#sidebar-nav a {
+		color: white; /* White text for links */
+		text-decoration: none; /* Remove underline */
+		display: block; /* Block-level links */
+		padding: 10px; /* Padding for links */
+		border-radius: 4px; /* Rounded corners */
+		transition: background-color 0.3s; /* Smooth background transition */
+	}
+
+	#sidebar-nav a:hover {
+		background-color: #495057; /* Darker background on hover */
+	}
+
+	/* Header section styling */
+	.header-section {
+		background-color: #f8f9fa; /* Light background for header */
+		border-radius: 0.5rem; /* Rounded corners */
+	}
+
+	/* Donation list styling */
+	.donation-list {
+		display: flex;
+		flex-direction: column; /* Stack donation cards vertically */
+	}
+
+	/* Donation card styling */
+	.donation-card {
+		border-radius: 0.5rem; /* Rounded corners */
+		transition: box-shadow 0.3s; /* Smooth shadow transition */
+		background-color: #ffffff; /* White background for cards */
+	}
+
+	/* Hover effect for donation cards */
+	.donation-card:hover {
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Lighter shadow on hover */
+	}
+
+	/* Individual donation info styling */
+	.donation-info {
+		display: flex; /* Flexbox for label and value alignment */
+		justify-content: space-between; /* Space out the label and value */
+	}
+
+	.info-label {
+		font-weight: bold; /* Bold for better visibility */
+		color: #333; /* Dark text for contrast */
+	}
+
+	/* Status text styles */
+	.status-text {
+		font-weight: normal; /* Regular weight for status messages */
+		display: block; /* Block to separate from label */
+	}
+
+	.text-pending {
+		color: #ffc107; /* Yellow for pending */
+	}
+
+	.text-rejected {
+		color: #dc3545; /* Red for rejected */
+	}
+
+	.text-accepted {
+		color: #28a745; /* Green for accepted */
+	}
+
+	.text-assigned {
+		color: #007bff; /* Blue for assigned */
+	}
+
+	/* Button styling */
+	.btn-retry {
+		background-color: #007bff; /* Primary button color */
+		color: white; /* Text color */
+		padding: 0.5rem 1rem; /* Padding for button */
+		border-radius: 0.25rem; /* Rounded corners */
+		text-decoration: none; /* Remove underline */
+	}
+
+	.btn-retry:hover {
+		background-color: #0056b3; /* Darker shade on hover */
+		transition: background-color 0.3s; /* Smooth transition */
+	}
+</style>

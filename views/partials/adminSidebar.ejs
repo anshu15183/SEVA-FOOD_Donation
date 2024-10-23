@@ -1,0 +1,91 @@
+<div id="sidebar">
+	<ul id="sidebar-nav">
+		Welcome <%= currentUser.firstName %>
+		<li><a href="/admin/dashboard">Dashboard</a></li>
+		<li><a href="/admin/donations/pending">Pending Donations</a></li>
+		<li><a href="/admin/donations/previous">Previous Donations</a></li>
+		<li><a href="/admin/agents">Agents</a></li>
+		<li><a href="/admin/profile">My Profile</a></li>
+
+		<li><a href="/auth/logout" class="btn">Logout</a></li>
+	</ul>
+</div>
+
+<style>
+	/* General body styling */
+	body {
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		margin: 0;
+		padding: 0;
+		background-color: #f5f5f5; /* light background for modern look */
+	}
+
+	/* Sidebar Styling */
+	#sidebar {
+		width: 250px;
+		background-color: #2f3b52; /* Dark, professional background */
+		color: #fff; /* White text for readability */
+		position: fixed;
+		height: 100%;
+		padding: 20px;
+		box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Minimal shadow for depth */
+	}
+
+	#sidebar-nav {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	/* Welcome Text Styling */
+	#sidebar-nav li {
+		margin-bottom: 25px;
+	}
+
+	#sidebar-nav li:first-child {
+		font-size: 18px;
+		font-weight: bold;
+		margin-bottom: 40px; /* More spacing below the Welcome text */
+	}
+
+	/* Link Styling */
+	#sidebar-nav a {
+		display: block;
+		text-decoration: none;
+		font-size: 16px;
+		color: #c3cbe4; /* Softer text color for minimalism */
+		padding: 10px 15px;
+		border-radius: 4px;
+		transition: background-color 0.3s ease, color 0.3s ease;
+	}
+
+	/* Active or Hover State for Links */
+	#sidebar-nav a:hover,
+	#sidebar-nav a.active {
+		background-color: #556080; /* Darker shade for hover/active state */
+		color: #fff; /* White text when hovered */
+	}
+
+	/* Logout Button */
+	#sidebar-nav a.btn {
+		background-color: #ff6b6b; /* Soft red logout button for emphasis */
+		color: white;
+		text-align: center;
+		margin-top: 20px;
+	}
+
+	#sidebar-nav a.btn:hover {
+		background-color: #e63946; /* Slightly darker on hover for logout */
+	}
+
+	/* Mobile-friendly adjustments */
+	@media screen and (max-width: 768px) {
+		#sidebar {
+			width: 200px;
+		}
+		#sidebar-nav a {
+			font-size: 14px;
+			padding: 8px 12px;
+		}
+	}
+</style>

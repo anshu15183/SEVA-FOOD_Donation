@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Admin Dashboard</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="styles.css" />
+		<!-- Link to your CSS file -->
+	</head>
+	<body>
+		<main>
+			<%- include('../partials/adminSidebar') %>
+
+			<div id="main-wrapper">
+				<div class="bg-white shadow-sm p-3 d-flex justify-content-between align-items-center">
+					<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+					<h5 class="m-0 color-theme">Pending Donations</h5>
+				</div>
+
+				<div class="col col-sm-10 col-12 m-auto my-4" style="max-height: 75%; overflow: auto">
+					<table class="table table-info table-striped table-hover m-0 bg-white">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Donor Name</th>
+								<th scope="col">Food Type</th>
+								<th scope="col">Quantity</th>
+								<th scope="col">Status</th>
+								<th scope="col">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% for(let i = 0; i < pendingDonations.length; i++) { %>
+							<tr>
+								<th scope="row"><%= i + 1 %></th>
+								<td><%= pendingDonations[i].donor.firstName + " " + pendingDonations[i].donor.lastName %></td>
+								<td><%= pendingDonations[i].foodType %></td>
+								<td><%= pendingDonations[i].quantity %></td>
+								<td class="fw-bold text-<%= pendingDonations[i].status.toLowerCase() %>"><%= pendingDonations[i].status %></td>
+								<td>
+									<a href="/admin/donation/view/<%= pendingDonations[i]._id %>" class="btn btn-primary">View</a>
+								</td>
+							</tr>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</main>
+
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script src="script.js">
+			<!-- Link to your JavaScript file -->
+		</script>
+	</body>
+</html>
+
+<style>
+	/* styles.css */
+
+	/* General styles */
+	body {
+		font-family: Arial, sans-serif;
+		margin: 0;
+		padding: 0;
+	}
+
+	/* Sidebar Styles */
+	.admin-sidebar {
+		width: 250px; /* Fixed width for sidebar */
+		height: 100vh; /* Full height */
+		position: fixed; /* Fixed positioning */
+		left: 0; /* Align to the left */
+		top: 0; /* Align to the top */
+		background-color: #f8f9fa; /* Background color for sidebar */
+		box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+		z-index: 1000; /* Ensure it’s above other content */
+	}
+
+	/* Main Content Styles */
+	#main-wrapper {
+		margin-left: 250px; /* Adjust margin to avoid overlap */
+		padding: 20px; /* Padding for content */
+		transition: margin-left 0.3s ease; /* Smooth transition when toggling */
+	}
+
+	/* Responsive Adjustments */
+	@media (max-width: 768px) {
+		.admin-sidebar {
+			width: 100%; /* Full width on small screens */
+			height: auto; /* Auto height */
+			position: relative; /* Change position for responsiveness */
+		}
+
+		#main-wrapper {
+			margin-left: 0; /* No margin for small screens */
+		}
+	}
+</style>
+
+<script>
+	// script.js
+
+	const sidebarToggleBtn = document.getElementById("sidebar-toggler-btn");
+	const mainWrapper = document.getElementById("main-wrapper");
+
+	sidebarToggleBtn.addEventListener("click", () => {
+		if (mainWrapper.style.marginLeft === "0px" || mainWrapper.style.marginLeft === "") {
+			mainWrapper.style.marginLeft = "250px"; // Adjust this according to sidebar width
+		} else {
+			mainWrapper.style.marginLeft = "0px"; // Hide sidebar
+		}
+	});
+</script>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Donation Details</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="styles.css" />
+		<!-- Link to your CSS file -->
+	</head>
+	<body>
+		<main>
+			<%- include('../partials/adminSidebar') %>
+
+			<div id="main-wrapper">
+				<div class="bg-white shadow-sm p-3 d-flex justify-content-between align-items-center">
+					<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+					<h5 class="m-0 color-theme">Donation Details</h5>
+				</div>
+
+				<div class="border m-4 my-3 p-4 bg-white rounded-2 shadow-sm">
+					<div class="mb-2">
+						<span class="font-weight-bold">Donor Name:</span>
+						<span><%= donation.donor.firstName + " " + donation.donor.lastName %></span>
+					</div>
+
+					<div class="mb-2">
+						<span class="font-weight-bold">Food Type:</span>
+						<span><%= donation.foodType %></span>
+					</div>
+
+					<div class="mb-2">
+						<span class="font-weight-bold">Quantity:</span>
+						<span><%= donation.quantity %></span>
+					</div>
+
+					<div class="mb-2">
+						<span class="font-weight-bold">Time of Cooking:</span>
+						<span><%= donation.cookingTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short"}) %></span>
+					</div>
+
+					<div class="mb-2">
+						<span class="font-weight-bold">Address to Collect:</span>
+						<span><%= donation.address %></span>
+					</div>
+
+					<div class="mb-2">
+						<span class="font-weight-bold">Phone:</span>
+						<span><%= donation.phone %></span>
+					</div>
+
+					<% if(donation.donorToAdminMsg != "") { %>
+					<div class="mb-2">
+						<span class="font-weight-bold">Message from Donor:</span>
+						<div class="ms-3"><%= donation.donorToAdminMsg %></div>
+					</div>
+					<% } %>
+
+					<div class="mb-2">
+						<span class="font-weight-bold">Status:</span>
+						<span class="fw-bold text-<%= donation.status %>"><%= donation.status %></span>
+					</div>
+
+					<% if(donation.status == "assigned") { %>
+					<div class="mb-2">
+						<span class="font-weight-bold">Agent Assigned:</span>
+						<span><%= donation.agent.firstName + " " + donation.agent.lastName %></span>
+					</div>
+					<% } %> <% if(donation.status == "assigned" && donation.adminToAgentMsg != "") { %>
+					<div class="mb-2">
+						<span class="font-weight-bold">Your Message to Agent:</span>
+						<div class="ms-3"><%= donation.adminToAgentMsg %></div>
+					</div>
+					<% } %> <% if(donation.status == "collected") { %>
+					<div class="mb-2">
+						<span class="font-weight-bold">Collection Time:</span>
+						<span><%= donation.collectionTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short"}) %></span>
+					</div>
+					<% } %>
+
+					<div class="mt-4">
+						<% if(donation.status == "pending") { %>
+						<a href="/admin/donation/accept/<%= donation._id %>" class="btn btn-success me-2">Accept</a>
+						<a href="/admin/donation/reject/<%= donation._id %>" class="btn btn-danger">Reject</a>
+						<% } else if(donation.status == "accepted") { %>
+						<a href="/admin/donation/assign/<%= donation._id %>" class="btn btn-info">Assign Agent</a>
+						<% } %>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script src="script.js"></script>
+		<!-- Link to your JavaScript file -->
+	</body>
+</html>
+<style>
+	/* styles.css */
+
+	/* General styles */
+	body {
+		font-family: Arial, sans-serif;
+		margin: 0;
+		padding: 0;
+	}
+
+	/* Sidebar Styles */
+	.admin-sidebar {
+		width: 250px; /* Fixed width for sidebar */
+		height: 100vh; /* Full height */
+		position: fixed; /* Fixed positioning */
+		left: 0; /* Align to the left */
+		top: 0; /* Align to the top */
+		background-color: #f8f9fa; /* Background color for sidebar */
+		box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+		z-index: 1000; /* Ensure it’s above other content */
+	}
+
+	/* Main Content Styles */
+	#main-wrapper {
+		margin-left: 250px; /* Adjust margin to avoid overlap */
+		padding: 20px; /* Padding for content */
+		transition: margin-left 0.3s ease; /* Smooth transition when toggling */
+	}
+
+	/* Responsive Adjustments */
+	@media (max-width: 768px) {
+		.admin-sidebar {
+			width: 100%; /* Full width on small screens */
+			height: auto; /* Auto height */
+			position: relative; /* Change position for responsiveness */
+		}
+
+		#main-wrapper {
+			margin-left: 0; /* No margin for small screens */
+		}
+	}
+
+	/* Button Styles */
+	.btn-success {
+		background-color: #28a745; /* Green color for Accept */
+		color: white; /* White text */
+	}
+
+	.btn-danger {
+		background-color: #dc3545; /* Red color for Reject */
+		color: white; /* White text */
+	}
+
+	.btn-info {
+		background-color: #17a2b8; /* Blue color for Assign Agent */
+		color: white; /* White text */
+	}
+
+	.font-weight-bold {
+		font-weight: 600; /* Bold font for labels */
+	}
+
+	/* Text Color for Status */
+	.text-pending {
+		color: orange; /* Orange for pending */
+	}
+
+	.text-accepted {
+		color: blue; /* Blue for accepted */
+	}
+
+	.text-assigned {
+		color: green; /* Green for assigned */
+	}
+
+	.text-collected {
+		color: gray; /* Gray for collected */
+	}
+</style>
+
+<script>
+	// script.js
+
+	const sidebarToggleBtn = document.getElementById("sidebar-toggler-btn");
+	const mainWrapper = document.getElementById("main-wrapper");
+
+	sidebarToggleBtn.addEventListener("click", () => {
+		if (mainWrapper.style.marginLeft === "0px" || mainWrapper.style.marginLeft === "") {
+			mainWrapper.style.marginLeft = "250px"; // Adjust this according to sidebar width
+		} else {
+			mainWrapper.style.marginLeft = "0px"; // Hide sidebar
+		}
+	});
+</script>
